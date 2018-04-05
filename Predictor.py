@@ -89,6 +89,7 @@ class Predictor:
 
     def get_accuracy(self):
         df = pd.read_csv(self.interval + '/' + self.company_code + '.csv')
+        df = pd.read_csv('TCS.csv')
         df['HL_PCT'] = (df['High'] - df['Close']) / df['Close']
         df['PCT_CHG'] = (df['Close'] - df['Open']) / df['Open']
         df['Volume'] = df['Total Trade Quantity']
@@ -104,7 +105,6 @@ class Predictor:
 
         df.dropna(inplace=True)
         y = np.array(df['Label'])
-
         clf = LinearRegression()
         X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, y, test_size=0.2)
         clf.fit(X_train, y_train)
@@ -155,3 +155,5 @@ class Predictor:
         # plt.xlabel('Date')
         # plt.ylabel('Price')
         # plt.show()
+# tcs = Predictor('TCS')
+# print(tcs.get_accuracy())
